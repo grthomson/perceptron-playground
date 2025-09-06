@@ -1,36 +1,15 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.colors import ListedColormap
 
 
 class Perceptron:
-    """Perceptron classifier.
-
-    Parameters
-    ----------
-    eta : float
-        Learning rate (between 0.0 and 1.0).
-    n_iter : int
-        Passes over the training dataset.
-    random_state : int
-        RNG seed for weight initialization.
-
-    Attributes
-    ----------
-    w_ : 1d-array
-        Weights after fitting.
-    b_ : float
-        Bias unit after fitting.
-    errors_ : list[int]
-        Number of misclassifications (updates) in each epoch.
-    """
+    """Perceptron classifier."""
 
     def __init__(self, eta: float = 0.01, n_iter: int = 50, random_state: int = 1):
         self.eta = eta
         self.n_iter = n_iter
         self.random_state = random_state
-        self.w_: np.ndarray | None = None
-        self.b_: float | None = None
         self.errors_: list[int] = []
 
     def fit(self, X: np.ndarray, y: np.ndarray) -> "Perceptron":
@@ -42,8 +21,9 @@ class Perceptron:
 
         for _ in range(self.n_iter):
             errors = 0
-            for xi, target in zip(X, y):
-                update = self.eta * (target - self.predict(xi))
+            for xi, target in zip(X, y, strict=True):
+                update = self.eta * (int(target) - int(self.predict(xi)))
+                assert self.w_ is not None and self.b_ is not None
                 self.w_ += update * xi
                 self.b_ += update
                 errors += int(update != 0.0)
@@ -52,33 +32,37 @@ class Perceptron:
 
     def net_input(self, X: np.ndarray) -> np.ndarray | float:
         """Calculate net input."""
+        assert self.w_ is not None and self.b_ is not None
         return np.dot(X, self.w_) + self.b_
 
-    def predict(self, X: np.ndarray) -> np.ndarray | int:
+    def predict(self, X: np.ndarray) -> np.ndarray:
         """Return class label after unit step."""
         return np.where(self.net_input(X) >= 0.0, 1, 0)
 
 
-def plot_decision_regions(X: np.ndarray, y: np.ndarray, classifier: Perceptron, resolution: float = 0.02) -> None:
+def plot_decision_regions(
+    X: np.ndarray,
+    y: np.ndarray,
+    classifier: Perceptron,
+    resolution: float = 0.02,
+) -> None:
     """Plot decision regions for a 2D dataset and a fitted classifier."""
     markers = ("o", "s", "^", "v", "<")
     colors = ("red", "blue", "lightgreen", "gray", "cyan")
     cmap = ListedColormap(colors[: len(np.unique(y))])
 
-    # decision surface
     x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1
     xx1, xx2 = np.meshgrid(
         np.arange(x1_min, x1_max, resolution),
         np.arange(x2_min, x2_max, resolution),
     )
-    lab = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)
-    lab = lab.reshape(xx1.shape)
+    grid = np.c_[xx1.ravel(), xx2.ravel()]
+    lab = classifier.predict(grid).reshape(xx1.shape)
     plt.contourf(xx1, xx2, lab, alpha=0.3, cmap=cmap)
     plt.xlim(xx1.min(), xx1.max())
     plt.ylim(xx2.min(), xx2.max())
 
-    # class points
     for idx, cl in enumerate(np.unique(y)):
         plt.scatter(
             x=X[y == cl, 0],

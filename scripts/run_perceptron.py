@@ -1,8 +1,8 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 # Import from the package under src/
 from perceptron.perceptron_class import Perceptron, plot_decision_regions
@@ -22,7 +22,9 @@ def main():
 
     # plot data
     plt.scatter(X[:50, 0], X[:50, 1], color="red", marker="o", label="Setosa")
-    plt.scatter(X[50:100, 0], X[50:100, 1], color="blue", marker="s", label="Versicolor")
+    plt.scatter(
+        X[50:100, 0], X[50:100, 1], color="blue", marker="s", label="Versicolor"
+    )
 
     plt.xlabel("Sepal length [cm]")
     plt.ylabel("Petal length [cm]")

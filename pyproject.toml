@@ -32,8 +32,10 @@ target-version = ["py310"]
 
 [tool.ruff]
 line-length = 88
-select = ["E", "F", "I", "UP", "B"]
 src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
 
 [tool.pytest.ini_options]
 addopts = "-q --cov=src --cov-report=term-missing"
