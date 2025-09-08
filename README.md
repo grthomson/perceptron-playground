@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/grthomson/perceptron-playground/actions/workflows/ci.yml/badge.svg)](https://github.com/grthomson/perceptron-playground/actions/workflows/ci.yml)
 
-Experiments with perceptrons with a view to entity resolution as binary classification. Currently running a simple single-layer model on the Iris dataset, to be extended to multilayer versions. Includes plotting, comparison, and research playground. Based on 
+Experiments with perceptrons with a view to entity resolution modelled as binary classification. Currently running a simple single-layer model on the Iris dataset, to be extended to multilayer versions. Includes analytics, visualisation and research playground.
 
 ## Getting started
 
@@ -16,5 +16,5 @@ pre-commit install
 
 ## Acknowledgements
 
-This project is heavily based on examples in  
-[**Python Machine Learning, 3rd Edition** by Sebastian Raschka](https://github.com/rasbt/python-machine-learning-book-3rd-edition).
+This project is heavily based on examples from the excellent book
+[**Python Machine Learning, 3rd Edition**, by Sebastian Raschka](https://github.com/rasbt/python-machine-learning-book-3rd-edition).
