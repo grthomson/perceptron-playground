@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from data_prep.features import build_levenshtein_features
+from data_prep.create_linkage_features import build_levenshtein_features
 from perceptron.perceptron_class import Perceptron
 
 DATA = Path(__file__).resolve().parents[1] / "data"
