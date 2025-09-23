@@ -9,6 +9,7 @@ build/
 .pytest_cache/
 .mypy_cache/
 coverage.xml
+.coverage
 htmlcov/
 .cache/
 

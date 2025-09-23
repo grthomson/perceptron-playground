@@ -19,10 +19,10 @@ classifiers = [
 
 # Safer ranges: allow bugfix updates, avoid silent jumps to next major
 dependencies = [
-  "numpy~=1.23",
-  "pandas~=1.5",
-  "matplotlib~=3.7",
-  "scikit-learn~=1.3",
+  "numpy>=1.26,<3.0",
+  "pandas>=2.1,<3.0",
+  "matplotlib>=3.8,<4.0",
+  "scikit-learn>=1.4,<2.0",
 ]
 
 [project.optional-dependencies]
@@ -32,7 +32,8 @@ dev = [
   "pre-commit~=3.5",
   "black~=24.0",
   "ruff~=0.5",
-  "mypy~=1.7"
+  "mypy~=1.7",
+  "faker>=18,<38",
 ]
 
 [tool.setuptools.package-dir]

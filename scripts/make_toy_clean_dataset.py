@@ -8,7 +8,7 @@ OUT = Path(__file__).resolve().parents[1] / "data" / "toy_people_clean.csv"
 
 def main(n_rows: int = 100, seed: int = 42):
     fake = Faker("en_GB")  # UK-style addresses & postcodes
-    Faker.seed(seed)
+    fake.seed_instance(seed)
 
     rows = []
     for i in range(1, n_rows + 1):
