@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from data_prep.features import build_levenshtein_features
+from data_prep.create_linkage_features import build_levenshtein_features
 
 DATA = Path(__file__).resolve().parents[1] / "data"
 MODELS = DATA / "models"
