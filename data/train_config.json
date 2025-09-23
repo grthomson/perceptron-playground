@@ -1,0 +1,11 @@
+{
+  "cols": [
+    "forename",
+    "surname",
+    "postcode"
+  ],
+  "id_left": "id",
+  "id_right": "id_right",
+  "neg_ratio": 1.0,
+  "seed": 7
+}

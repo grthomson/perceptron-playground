@@ -9,12 +9,18 @@ build/
 .pytest_cache/
 .mypy_cache/
 coverage.xml
+.coverage
 htmlcov/
 .cache/
 
 .vscode/
 .idea/
 
+# generated toy data + models
+data/toy_people_*.csv
+data/toy_labels.csv
+data/toy_scored_pairs.csv
+data/models/*.pkl
 data/*.parquet
 data/*.feather
 data/*.pickle
