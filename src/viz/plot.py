@@ -173,9 +173,11 @@ def plot_decision_regions_2d(
     ax.set_xlim(xx1.min(), xx1.max())
     ax.set_ylim(xx2.min(), xx2.max())
 
-    classes = sorted(classes, key=lambda cl: 0 if label_map[cl] == "Link" else 1)
+    ordered_classes = sorted(
+        classes, key=lambda cl: 0 if label_map[cl] == "Link" else 1
+    )
 
-    for idx, cl in enumerate(classes):
+    for idx, cl in enumerate(ordered_classes):
         ax.scatter(
             X_plot[y == cl, 0],
             X_plot[y == cl, 1],
@@ -236,9 +238,11 @@ def plot_decision_plane_3d(
     )
 
     classes = np.unique(y)
-    classes = sorted(classes, key=lambda cl: 0 if label_map[cl] == "Link" else 1)
+    ordered_classes = sorted(
+        classes, key=lambda cl: 0 if label_map[cl] == "Link" else 1
+    )
 
-    for idx, cl in enumerate(classes):
+    for idx, cl in enumerate(ordered_classes):
         ax.scatter(
             Xp[y == cl, 0],
             Xp[y == cl, 1],
