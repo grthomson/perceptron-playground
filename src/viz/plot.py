@@ -54,7 +54,7 @@ def plot_data_scatter_2d(
     X: np.ndarray,
     y: np.ndarray,
     labels: tuple[str, str] | None = None,
-    feature_names: tuple[str, str] | None = None,
+    feature_names: tuple[str, ...] | None = None,
 ) -> None:
     """Scatter plot of 2D features with class labels."""
     label_map = _default_label_map(y, labels)
@@ -123,7 +123,7 @@ def plot_decision_regions_2d(
     classifier,
     feat_idx: tuple[int, int] = (0, 1),
     resolution: float = 0.02,
-    feature_names: tuple[str, str] | None = None,
+    feature_names: tuple[str, ...] | None = None,
     labels: tuple[str, str] | None = None,
 ) -> None:
     """Plot decision regions using any 2 selected features from X."""
@@ -213,7 +213,7 @@ def plot_decision_plane_3d(
     y: np.ndarray,
     classifier,
     feat_idx: tuple[int, int, int] = (0, 1, 2),
-    feature_names: tuple[str, str, str] | None = None,
+    feature_names: tuple[str, ...] | None = None,
     labels: tuple[str, str] | None = None,
 ) -> None:
     """Plot the perceptron decision boundary as a plane in 3D (using 3 features)."""
