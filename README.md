@@ -2,7 +2,10 @@
 
 [![CI](https://github.com/grthomson/perceptron-playground/actions/workflows/ci.yml/badge.svg)](https://github.com/grthomson/perceptron-playground/actions/workflows/ci.yml)
 
-Experiments with perceptrons with a view to entity resolution modelled as binary classification. Currently running a simple single-layer model for i) classification of the classic Iris dataset and ii) the entity resolution task of matching a toy dataset with an error-imputed version of itself.
+Experiments with perceptrons for entity resolution, modelled as binary classification.
+Currently includes:
+1. A simple single-layer perceptron for classifying the classic Iris dataset.
+2. The same perceptron adapted to the toy entity resolution task of matching a noisy dataset to its clean version.
 
 ## Acknowledgements
 
@@ -39,21 +42,14 @@ python scripts/run_linkage_perceptron.py            # -> data/toy_scored_pairs.c
 
 ## What those steps do
 
-- Setup: creates an isolated Python environment, installs project + dev tooling, enables pre-commit checks locally.
+1. **Setup:** Creates a virtual environment, installs the project and dev dependencies, and enables local pre-commit hooks.
+2. **Iris demo (optional):** Trains on two Iris features and produces three diagnostic plots (scatter, convergence, decision regions) to validate perceptron behaviour.
+3. **Make toy data:** Generates a small synthetic dataset (`toy_people_clean.csv`) using Faker, seeded for reproducibility.
+4. **Make noisy copy:** Introduces realistic errors (typos, case changes, postcode spacing, etc.) to create `toy_people_noisy.csv`, along with alignment labels in `toy_labels.csv`.
+5. **Train entity resolution perceptron:** Builds normalized Levenshtein similarity features for selected columns and learns a linear decision rule (weights + bias).
+6. **Score pairs:** Applies the trained model to all candidate pairs (the Cartesian product of clean and noisy data) and writes `toy_scored_pairs.csv` with scores and predictions.
 
-- Iris demo (optional): trains on two Iris features and pops three plots (scatter, convergence, decision regions) to validate basic single layer perceptron functionality.
-
-- Make toy data: generates the dataset toy_people_clean.csv with names/addresses using the Faker package (by default seeded for reproducibility).
-
-- Make noisy copy: introduces realistic mistakes (typos, case changes, postcode spacing, etc.) to create toy_people_noisy.csv.
-
-- Writes toy_labels.csv, which associates each clean row with its corresponding noisy row (these are actual matches or true positives - all other row pairs are actual non-matches or true negatives).
-
-- Train entity resolution perceptron: builds normalized Levenshtein similarity features for the selected columns, then learns a linear decision rule (weights + bias).
-
-- Score pairs: applies the trained entity resolution model to candidate pairs (by default, the full cartesian product of the toy dataset and its noisy copy). Writes toy_scored_pairs.csv with a score and prediction per pair.
-
-- Note: generated CSVs and model artifacts under data/ are ignored by git (see .gitignore). The code to recreate them lives in scripts/.
+Generated CSVs and model artifacts under `data/` are ignored by git (see `.gitignore`). All scripts to recreate them live under `scripts/`.
 
 ## Visualisations
 
@@ -100,3 +96,16 @@ plot_decision_plane_3d(
 ### 2D decision regions (choose any two features, e.g. forename_sim vs surname_sim):
 
 For models with 4–5 features, the decision boundary cannot be visualised in 3 dimensional Euclidean space. Current plan is to add a Principal Component Analysis (PCA) projection step and provide some meaningful plot using the reduced dimensions.
+
+## CI
+
+This project uses **GitHub Actions** for continuous integration.
+
+Every push to `main` or `develop` (and all pull requests) trigger the CI workflow, which runs on multiple Python versions (`3.10`, `3.11`, `3.12`). The pipeline:
+
+- Installs the package with development dependencies
+- Runs **ruff** and **black** for linting and formatting checks
+- Runs **mypy** for static type checking
+- Executes the test suite with **pytest**
+
+You can find the workflow configuration in [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
