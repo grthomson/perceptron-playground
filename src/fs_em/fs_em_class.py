@@ -139,6 +139,7 @@ class FellegiSunterEM:
     def score(self, comparisons: pd.DataFrame) -> pd.Series:
         """Return FS log2-likelihood ratio scores for each pair."""
         self._check_fitted()
+        assert self.weights_ is not None  # narrow Optional for type checker
         gamma = comparisons[self.variables_]
         w = self.weights_.set_index("variable")
 
@@ -162,8 +163,12 @@ class FellegiSunterEM:
     ) -> pd.Series:
         """Return posterior P(match | comparisons)."""
         self._check_fitted()
-        prior = float(self.prior_ if prior is None else prior)
-        k = (1.0 - prior) / prior
+        assert self.prior_ is not None  # narrow Optional for type checker
+        if prior is None:
+            p_val = float(self.prior_)
+        else:
+            p_val = float(prior)
+        k = (1.0 - p_val) / p_val
         s = self.score(comparisons).to_numpy(float)
         return pd.Series(1.0 / (1.0 + k * (2.0 ** (-s))), index=comparisons.index)
 
